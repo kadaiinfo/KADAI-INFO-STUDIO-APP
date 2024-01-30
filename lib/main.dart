@@ -1,38 +1,52 @@
-import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-import 'package:settings_ui/settings_ui.dart';
-import 'package:url_launcher/url_launcher.dart';
+//インポートしたものは、pubspec.yamlに記載する必要があります。
+//記載した後はターミナルでflutter pub getを実行してください。
+import 'package:flutter/material.dart'; // Flutterのマテリアルデザインウィジェットをインポートします。
+import 'package:webview_flutter/webview_flutter.dart'; // WebViewを表示するためのパッケージをインポートします。
+import 'package:settings_ui/settings_ui.dart'; // 設定UIを簡単に作成するためのパッケージをインポートします。
+import 'package:url_launcher/url_launcher.dart'; // URLを開くためのパッケージをインポートします。
 
 void main() {
-  runApp(MyApp());
+  runApp(MyApp()); // アプリケーションを起動し、MyAppをルートウィジェットとして設定します。
 }
 
+// アプリケーションのルートとなるウィジェットを定義します。
 class MyApp extends StatelessWidget {
+  // StatelessWidgetを継承したMyAppクラスを定義します。
   @override
   Widget build(BuildContext context) {
+    // buildメソッドをオーバーライドします。ウィジェットのUIをここで構築します。
     return MaterialApp(
+      // MaterialAppウィジェットを返します。アプリのルートとなります。
       theme: ThemeData(
-        brightness: Brightness.light,
+        // アプリ全体のテーマを設定します。
+        brightness: Brightness.light, // 明るいテーマを適用します。
       ),
-      home: WebViewWithErrorHandling(),
+      home:
+          //homeプロパティにWebViewWithErrorHandlingウィジェットを設定します。これが初期画面になります。
+          WebViewWithErrorHandling(),
     );
   }
 }
 
+// WebViewを表示し、エラーハンドリングをするためのStatefulWidgetクラス。
 class WebViewWithErrorHandling extends StatefulWidget {
   @override
-  _WebViewWithErrorHandlingState createState() => _WebViewWithErrorHandlingState();
+  _WebViewWithErrorHandlingState createState() =>
+      _WebViewWithErrorHandlingState();
+  // createState()は新しいStateオブジェクトを作成します。_WebViewWithErrorHandlingStateは後で定義します。
 }
 
+// _WebViewWithErrorHandlingのStateクラス。UIの状態を管理します。
 class _WebViewWithErrorHandlingState extends State<WebViewWithErrorHandling> {
-  late WebViewController _controller;
-  bool _isLoading = true;
-  int _currentIndex = 0;
+  late WebViewController _controller; // WebViewのコントローラ。ページの読み込みやナビゲーションを制御します。
+  bool _isLoading = true; // ページが読み込み中かどうかを示すフラグ。
+  int _currentIndex = 0; // 現在表示しているURLのインデックス。_urlsリストで使用します。
 
+  // 表示するウェブページのURLリスト。
   final _urls = [
-    'https://kadaiinfo.com/',
-    'https://kadaiinfo.com/contents/',
-    'https://manaba.kic.kagoshima-u.ac.jp/',
+    'https://kadaiinfo.com/', // トップページのURL
+    'https://kadaiinfo.com/contents/', // コンテンツページのURL
+    'https://manaba.kic.kagoshima-u.ac.jp/', // ManabaのURL
   ];
 
   @override
@@ -51,33 +65,33 @@ class _WebViewWithErrorHandlingState extends State<WebViewWithErrorHandling> {
           ),
         ),
       ),
-      body: _currentIndex != 3 ? 
-        Stack(
-          children: [
-            WebView(
-              initialUrl: _urls[_currentIndex],
-              onWebViewCreated: (WebViewController controller) {
-                _controller = controller;
-              },
-              javascriptMode: JavascriptMode.unrestricted,
-              onPageFinished: (String url) {
-                setState(() {
-                  _isLoading = false;
-                });
-              },
-              onPageStarted: (String url) {
-                setState(() {
-                  _isLoading = true;
-                });
-              },
-            ),
-            if (_isLoading)
-              Center(
-                child: CircularProgressIndicator(),
-              ),
-          ],
-        ) : 
-        SettingsPage(), // SettingsPageを表示する
+      body: _currentIndex != 3
+          ? Stack(
+              children: [
+                WebView(
+                  initialUrl: _urls[_currentIndex],
+                  onWebViewCreated: (WebViewController controller) {
+                    _controller = controller;
+                  },
+                  javascriptMode: JavascriptMode.unrestricted,
+                  onPageFinished: (String url) {
+                    setState(() {
+                      _isLoading = false;
+                    });
+                  },
+                  onPageStarted: (String url) {
+                    setState(() {
+                      _isLoading = true;
+                    });
+                  },
+                ),
+                if (_isLoading)
+                  Center(
+                    child: CircularProgressIndicator(),
+                  ),
+              ],
+            )
+          : SettingsPage(), // SettingsPageを表示する
 
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.black54,
@@ -87,7 +101,8 @@ class _WebViewWithErrorHandlingState extends State<WebViewWithErrorHandling> {
         onTap: (index) {
           setState(() {
             _currentIndex = index;
-            if (_currentIndex != 3) { // 'その他'が選択された場合、WebViewを更新しない
+            if (_currentIndex != 3) {
+              // 'その他'が選択された場合、WebViewを更新しない
               _controller.loadUrl(_urls[_currentIndex]);
             }
           });
@@ -95,7 +110,7 @@ class _WebViewWithErrorHandlingState extends State<WebViewWithErrorHandling> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: '記事',
+            label: 'ホーム',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.business),
@@ -103,7 +118,7 @@ class _WebViewWithErrorHandlingState extends State<WebViewWithErrorHandling> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
-            label: 'Manaba',
+            label: 'manaba',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
@@ -114,8 +129,6 @@ class _WebViewWithErrorHandlingState extends State<WebViewWithErrorHandling> {
     );
   }
 }
-
-
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -190,4 +203,3 @@ class SettingsPage extends StatelessWidget {
     );
   }
 }
-
