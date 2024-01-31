@@ -1,11 +1,10 @@
-//インポートしたものは、pubspec.yamlに記載する必要があります。
-//記載した後はターミナルでflutter pub getを実行してください。
-import 'package:flutter/material.dart'; // Flutterのマテリアルデザインウィジェットをインポートします。
+import 'package:flutter/material.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
-import 'setting_page.dart'; // settingファイルをインポート
-import 'contets_page.dart'; // contetsファイルをインポート
-import 'home_page.dart'; // homeファイルをインポート
-import 'manaba_page.dart'; // manabaファイルをインポート
+import 'setting_page.dart';
+import 'contets_page.dart';
+import 'home_page.dart';
+import 'manaba_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,8 +27,7 @@ class WebViewWithErrorHandling extends StatefulWidget {
 }
 
 class _WebViewWithErrorHandlingState extends State<WebViewWithErrorHandling> {
-  //bool _isLoading = true;
-  int _currentIndex = 0; //デフォルトのインデックスをトップページに設定します。
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -57,51 +55,36 @@ class _WebViewWithErrorHandlingState extends State<WebViewWithErrorHandling> {
     // Scaffoldで画面を構成します。
     return Scaffold(
       backgroundColor: Colors.white,
-      // 上部のバー
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(0.0),
+        preferredSize: Size.fromHeight(0.0), // AppBarの高さを設定
         child: AppBar(
-          backgroundColor: Colors.white,
-          iconTheme: IconThemeData(color: Colors.black54),
-          elevation: 0,
+          backgroundColor: Colors.white, // AppBarの背景色を白に設定
+          iconTheme: IconThemeData(color: Colors.black54), // アイコンの色を設定
+          elevation: 0, // AppBarの影をなくす
         ),
       ),
-
-      //ボディ
       body: _body,
-
-      // 下部のバー
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.black87,
-        unselectedItemColor: Colors.black54,
-        showUnselectedLabels: true,
-        type: BottomNavigationBarType.fixed, //これを設定するとタブが選択された時にアニメーションしなくなる。
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-
-        // 下部のバーの詳細を設定します。
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'ホーム',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.widgets),
-            label: 'コンテンツ',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'manaba',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'その他',
-          ),
-        ],
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.only(bottom: 16), // ナビゲーションバーの下に10の余白を追加
+        child: CurvedNavigationBar(
+          index: _currentIndex,
+          height: 60,
+          items: <Widget>[
+            Icon(Icons.home, size: 30),
+            Icon(Icons.widgets, size: 30),
+            Icon(Icons.school, size: 30),
+            Icon(Icons.settings, size: 30),
+          ],
+          color: Colors.white, // ナビゲーションバーの背景色
+          backgroundColor: Colors.white,
+          buttonBackgroundColor: Colors.white, // タブボタンの背景色
+          animationDuration: Duration(milliseconds: 300),
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+        ),
       ),
     );
   }
