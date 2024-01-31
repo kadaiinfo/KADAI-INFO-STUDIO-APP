@@ -1,9 +1,6 @@
 //インポートしたものは、pubspec.yamlに記載する必要があります。
 //記載した後はターミナルでflutter pub getを実行してください。
 import 'package:flutter/material.dart'; // Flutterのマテリアルデザインウィジェットをインポートします。
-import 'package:webview_flutter/webview_flutter.dart'; // WebViewを表示するためのパッケージをインポートします。
-//import 'package:firebase_core/firebase_core.dart'; //今後通知を実装するために必要なパッケージをインポートします。
-//import 'package:firebase_messaging/firebase_messaging.dart'; //今後通知を実装するために必要なパッケージをインポートします。
 
 import 'setting_page.dart'; // settingファイルをインポート
 import 'contets_page.dart'; // contetsファイルをインポート
@@ -32,12 +29,13 @@ class WebViewWithErrorHandling extends StatefulWidget {
 
 class _WebViewWithErrorHandlingState extends State<WebViewWithErrorHandling> {
   //bool _isLoading = true;
-  int _currentIndex = 0;
+  int _currentIndex = 0; //デフォルトのインデックスをトップページに設定します。
 
   @override
   Widget build(BuildContext context) {
     Widget _body;
 
+    // インデックスによってbodyを変更します。
     switch (_currentIndex) {
       case 0:
         _body = HomePage();
@@ -56,8 +54,10 @@ class _WebViewWithErrorHandlingState extends State<WebViewWithErrorHandling> {
         break;
     }
 
+    // Scaffoldで画面を構成します。
     return Scaffold(
       backgroundColor: Colors.white,
+      // 上部のバー
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(0.0),
         child: AppBar(
@@ -66,17 +66,24 @@ class _WebViewWithErrorHandlingState extends State<WebViewWithErrorHandling> {
           elevation: 0,
         ),
       ),
+
+      //ボディ
       body: _body,
+
+      // 下部のバー
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.black54,
+        selectedItemColor: Colors.black87,
         unselectedItemColor: Colors.black54,
         showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed, //これを設定するとタブが選択された時にアニメーションしなくなる。
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {
             _currentIndex = index;
           });
         },
+
+        // 下部のバーの詳細を設定します。
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
