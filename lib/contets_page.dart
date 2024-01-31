@@ -9,115 +9,50 @@ class ContentsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(0.0), // AppBarの高さを設定
+        preferredSize: Size.fromHeight(0.0),
         child: AppBar(
-          backgroundColor: Colors.white, // AppBarの背景色を白に設定
-          elevation: 0, // AppBarの影をなくす
+          backgroundColor: Colors.white,
+          elevation: 0,
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0), // コンテンツに余白を付ける
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, // 左揃え
-          children: [
-            Row(
-              children: [
-                Icon(
-                  Icons.widgets, // アイコンの設定
-                  size: 48.0, // アイコンのサイズ
-                  color: Colors.grey, // アイコンの色
-                ),
-                SizedBox(width: 8.0), // アイコンとテキストの間のスペース
-                Text(
-                  'Contents 1', // 表示するテキスト
-                  style: TextStyle(
-                    fontSize: 16.0, // テキストのサイズ
-                    color: Colors.black54, // テキストの色
+      body: SingleChildScrollView(
+        // SingleChildScrollViewを追加
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(20, (index) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 24.0),
+                child: InkWell(
+                  onTap: () => _onIconTapped(index + 1),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.widgets,
+                        size: 48.0,
+                        color: Colors.grey,
+                      ),
+                      SizedBox(width: 8.0),
+                      Text(
+                        'Contents ${index + 1}',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.black54,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-            SizedBox(height: 24.0), // アイテム間のスペース
-
-            Row(
-              children: [
-                Icon(
-                  Icons.widgets,
-                  size: 48.0,
-                  color: Colors.grey,
-                ),
-                SizedBox(width: 8.0),
-                Text(
-                  'Contents 2',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.black54,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 24.0),
-
-            Row(
-              children: [
-                Icon(
-                  Icons.widgets,
-                  size: 48.0,
-                  color: Colors.grey,
-                ),
-                SizedBox(width: 8.0),
-                Text(
-                  'Contents 3',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.black54,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 24.0),
-
-            Row(
-              children: [
-                Icon(
-                  Icons.widgets,
-                  size: 48.0,
-                  color: Colors.grey,
-                ),
-                SizedBox(width: 8.0),
-                Text(
-                  'Contents 4',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.black54,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 24.0),
-            Row(
-              children: [
-                Icon(
-                  Icons.widgets,
-                  size: 48.0,
-                  color: Colors.grey,
-                ),
-                SizedBox(width: 8.0),
-                Text(
-                  'Contents 5',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.black54,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 24.0),
-
-            // ここに将来的に他のコンテンツを追加する
-          ],
+              );
+            }),
+          ),
         ),
       ),
     );
+  }
+
+  void _onIconTapped(int index) {
+    // ここに各アイコンがタップされた時の処理を書く
   }
 }

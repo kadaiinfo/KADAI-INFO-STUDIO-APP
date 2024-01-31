@@ -90,7 +90,7 @@ class _WebViewWithErrorHandlingState extends State<WebViewWithErrorHandling> {
             label: 'ホーム',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
+            icon: Icon(Icons.widgets),
             label: 'コンテンツ',
           ),
           BottomNavigationBarItem(
