@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 import 'setting_page.dart';
-import 'contets_page.dart';
+import 'contents_page.dart';
 import 'home_page.dart';
 import 'manaba_page.dart';
 
