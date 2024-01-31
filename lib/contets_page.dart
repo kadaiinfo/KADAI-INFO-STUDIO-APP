@@ -1,4 +1,5 @@
 // コンテンツページの管理をここで行います。
+//このページは、これから開発が発展していくことを想定して作成しています。
 import 'package:flutter/material.dart';
 
 class ContentsPage extends StatelessWidget {

@@ -7,6 +7,8 @@ import 'package:webview_flutter/webview_flutter.dart'; // WebViewを表示する
 
 import 'setting_page.dart'; // settingファイルをインポート
 import 'contets_page.dart'; // contetsファイルをインポート
+import 'home_page.dart'; // homeファイルをインポート
+import 'manaba_page.dart'; // manabaファイルをインポート
 
 void main() {
   runApp(MyApp());
@@ -29,15 +31,8 @@ class WebViewWithErrorHandling extends StatefulWidget {
 }
 
 class _WebViewWithErrorHandlingState extends State<WebViewWithErrorHandling> {
-  late WebViewController _controller;
-  bool _isLoading = true;
+  //bool _isLoading = true;
   int _currentIndex = 0;
-
-  final _urls = [
-    'https://kadaiinfo.com/',
-    //'https://kadaiinfo.com/contents/', //コンテンツページをwebviewさせようと考えていたが、拡張性を持たせるため、flutter上で作ることにした。
-    'https://manaba.kic.kagoshima-u.ac.jp/',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -45,35 +40,13 @@ class _WebViewWithErrorHandlingState extends State<WebViewWithErrorHandling> {
 
     switch (_currentIndex) {
       case 0:
-      case 2:
-        _body = Stack(
-          children: [
-            WebView(
-              initialUrl: _urls[_currentIndex],
-              onWebViewCreated: (WebViewController controller) {
-                _controller = controller;
-              },
-              javascriptMode: JavascriptMode.unrestricted,
-              onPageFinished: (String url) {
-                setState(() {
-                  _isLoading = false;
-                });
-              },
-              onPageStarted: (String url) {
-                setState(() {
-                  _isLoading = true;
-                });
-              },
-            ),
-            if (_isLoading)
-              Center(
-                child: CircularProgressIndicator(),
-              ),
-          ],
-        );
+        _body = HomePage();
         break;
       case 1:
         _body = ContentsPage();
+        break;
+      case 2:
+        _body = ManabaPage();
         break;
       case 3:
         _body = SettingsPage();
