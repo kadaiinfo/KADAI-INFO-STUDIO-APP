@@ -1,4 +1,4 @@
-// settings_page.dart
+// その他ページの管理をここで行います。
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -77,17 +77,17 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  // FCMの通知権限をリクエストする関数
-  void requestNotificationPermissions() async {
-    final messaging = FirebaseMessaging.instance;
-    await messaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-  }
+  // 今後、FCMの通知権限をリクエストする関数
+  // void requestNotificationPermissions() async {
+  //   final messaging = FirebaseMessaging.instance;
+  //   await messaging.requestPermission(
+  //     alert: true,
+  //     announcement: false,
+  //     badge: true,
+  //     carPlay: false,
+  //     criticalAlert: false,
+  //     provisional: false,
+  //     sound: true,
+  //   );
+  // }
 }

@@ -2,99 +2,98 @@
 //記載した後はターミナルでflutter pub getを実行してください。
 import 'package:flutter/material.dart'; // Flutterのマテリアルデザインウィジェットをインポートします。
 import 'package:webview_flutter/webview_flutter.dart'; // WebViewを表示するためのパッケージをインポートします。
-import 'package:firebase_core/firebase_core.dart'; //今後通知を実装するために必要なパッケージをインポートします。
-import 'package:firebase_messaging/firebase_messaging.dart'; //今後通知を実装するために必要なパッケージをインポートします。
+//import 'package:firebase_core/firebase_core.dart'; //今後通知を実装するために必要なパッケージをインポートします。
+//import 'package:firebase_messaging/firebase_messaging.dart'; //今後通知を実装するために必要なパッケージをインポートします。
 
 import 'setting_page.dart'; // settingファイルをインポート
+import 'contets_page.dart'; // contetsファイルをインポート
 
 void main() {
-  runApp(MyApp()); // アプリケーションを起動し、MyAppをルートウィジェットとして設定します。
+  runApp(MyApp());
 }
 
-// アプリケーションのルートとなるウィジェットを定義します。
 class MyApp extends StatelessWidget {
-  // StatelessWidgetを継承したMyAppクラスを定義します。
   @override
   Widget build(BuildContext context) {
-    // buildメソッドをオーバーライドします。ウィジェットのUIをここで構築します。
     return MaterialApp(
-      // MaterialAppウィジェットを返します。アプリのルートとなります。
-      theme: ThemeData(
-        // アプリ全体のテーマを設定します。
-        brightness: Brightness.light, // 明るいテーマを適用します。
-      ),
-      home:
-          //homeプロパティにWebViewWithErrorHandlingウィジェットを設定します。これが初期画面になります。
-          WebViewWithErrorHandling(),
+      theme: ThemeData(brightness: Brightness.light),
+      home: WebViewWithErrorHandling(),
     );
   }
 }
 
-// WebViewを表示し、エラーハンドリングをするためのStatefulWidgetクラス。
 class WebViewWithErrorHandling extends StatefulWidget {
   @override
   _WebViewWithErrorHandlingState createState() =>
       _WebViewWithErrorHandlingState();
-  // createState()は新しいStateオブジェクトを作成します。_WebViewWithErrorHandlingStateは後で定義します。
 }
 
-// _WebViewWithErrorHandlingのStateクラス。UIの状態を管理します。
 class _WebViewWithErrorHandlingState extends State<WebViewWithErrorHandling> {
-  late WebViewController _controller; // WebViewのコントローラ。ページの読み込みやナビゲーションを制御します。
-  bool _isLoading = true; // ページが読み込み中かどうかを示すフラグ。
-  int _currentIndex = 0; // 現在表示しているURLのインデックス。_urlsリストで使用します。
+  late WebViewController _controller;
+  bool _isLoading = true;
+  int _currentIndex = 0;
 
-  // 表示するウェブページのURLリスト。
   final _urls = [
-    'https://kadaiinfo.com/', // トップページのURL
-    'https://kadaiinfo.com/contents/', // コンテンツページのURL
-    'https://manaba.kic.kagoshima-u.ac.jp/', // ManabaのURL
+    'https://kadaiinfo.com/',
+    //'https://kadaiinfo.com/contents/', //コンテンツページをwebviewさせようと考えていたが、拡張性を持たせるため、flutter上で作ることにした。
+    'https://manaba.kic.kagoshima-u.ac.jp/',
   ];
 
   @override
   Widget build(BuildContext context) {
+    Widget _body;
+
+    switch (_currentIndex) {
+      case 0:
+      case 2:
+        _body = Stack(
+          children: [
+            WebView(
+              initialUrl: _urls[_currentIndex],
+              onWebViewCreated: (WebViewController controller) {
+                _controller = controller;
+              },
+              javascriptMode: JavascriptMode.unrestricted,
+              onPageFinished: (String url) {
+                setState(() {
+                  _isLoading = false;
+                });
+              },
+              onPageStarted: (String url) {
+                setState(() {
+                  _isLoading = true;
+                });
+              },
+            ),
+            if (_isLoading)
+              Center(
+                child: CircularProgressIndicator(),
+              ),
+          ],
+        );
+        break;
+      case 1:
+        _body = ContentsPage();
+        break;
+      case 3:
+        _body = SettingsPage();
+        break;
+      default:
+        _body = Center(child: Text('ページが見つかりません'));
+        break;
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(0.0), // AppBarの高さを設定
+        preferredSize: Size.fromHeight(0.0),
         child: AppBar(
-          backgroundColor: Colors.white, // AppBarの背景色を白に設定
-          iconTheme: IconThemeData(color: Colors.black54), // アイコンの色を設定
-          elevation: 0, // AppBarの影をなくす
-          leading: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [],
-          ),
+          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(color: Colors.black54),
+          elevation: 0,
         ),
       ),
-      body: _currentIndex != 3
-          ? Stack(
-              children: [
-                WebView(
-                  initialUrl: _urls[_currentIndex],
-                  onWebViewCreated: (WebViewController controller) {
-                    _controller = controller;
-                  },
-                  javascriptMode: JavascriptMode.unrestricted,
-                  onPageFinished: (String url) {
-                    setState(() {
-                      _isLoading = false;
-                    });
-                  },
-                  onPageStarted: (String url) {
-                    setState(() {
-                      _isLoading = true;
-                    });
-                  },
-                ),
-                if (_isLoading)
-                  Center(
-                    child: CircularProgressIndicator(),
-                  ),
-              ],
-            )
-          : SettingsPage(), // SettingsPageを表示する
-
+      body: _body,
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.black54,
         unselectedItemColor: Colors.black54,
@@ -103,10 +102,6 @@ class _WebViewWithErrorHandlingState extends State<WebViewWithErrorHandling> {
         onTap: (index) {
           setState(() {
             _currentIndex = index;
-            if (_currentIndex != 3) {
-              // 'その他'が選択された場合、WebViewを更新しない
-              _controller.loadUrl(_urls[_currentIndex]);
-            }
           });
         },
         items: [
