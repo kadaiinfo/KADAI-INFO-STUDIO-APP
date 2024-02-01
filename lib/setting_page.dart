@@ -24,19 +24,19 @@ class SettingsPage extends StatelessWidget {
       ),
       body: SettingsList(
         sections: [
-          SettingsSection(
-            title: const Text('一般'),
-            tiles: [
-              SettingsTile(
-                title: const Text('通知'),
-                leading: const Icon(Icons.notifications_active_outlined),
-                trailing: const Icon(Icons.navigate_next),
-                onPressed: (BuildContext context) {
-                  // 通知設定ページへの遷移などの処理をここに書く
-                },
-              ),
-            ],
-          ),
+          // SettingsSection(
+          //   title: const Text('一般'),
+          //   tiles: [
+          //     SettingsTile(
+          //       title: const Text('通知'),
+          //       leading: const Icon(Icons.notifications_active_outlined),
+          //       trailing: const Icon(Icons.navigate_next),
+          //       onPressed: (BuildContext context) {
+          //         // 通知設定ページへの遷移などの処理をここに書く
+          //       },
+          //     ),
+          //   ],
+          // ),
           SettingsSection(
             title: const Text('このアプリについて'),
             tiles: [
