@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'setting_page.dart';
 import 'contents_page.dart';
@@ -87,5 +89,30 @@ class _WebViewWithErrorHandlingState extends State<WebViewWithErrorHandling> {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setupFirebaseMessaging();
+  }
+
+  void setupFirebaseMessaging() async {
+    await Firebase.initializeApp();
+
+    FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      // アプリがフォアグラウンドにあるときにプッシュ通知を受信した場合の処理
+      print('Message received: ${message.notification?.body}');
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      // ユーザーがプッシュ通知をタップしてアプリを開いた場合の処理
+      print('Message clicked!');
+    });
   }
 }
