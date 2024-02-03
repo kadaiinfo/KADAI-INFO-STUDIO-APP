@@ -64,7 +64,7 @@ class SettingsPage extends StatelessWidget {
                 title: const Text('利用規約'),
                 trailing: const Icon(Icons.launch),
                 onPressed: (BuildContext context) async {
-                  const url = 'https://kadaiinfo.com/terms';
+                  const url = 'https://kadaiinfo.com/privacy-policy';
                   if (await canLaunch(url)) {
                     await launch(url);
                   }
