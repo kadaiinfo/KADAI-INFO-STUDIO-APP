@@ -34,10 +34,10 @@ class MyApp extends StatelessWidget {
 
 //ここもFlutterのおまじないです。
 //StatefulWidgetを継承したMainNavigationScreenクラスを作成します。
-//_MainNavigationScreenState() は _MainNavigationScreenState クラスの新しいインスタンスを作成します。
+//_MainNavigationScreenState() は _MainNavigationScreenState クラスのインスタンスを作成します。
 //このクラスは MainNavigationScreen ウィジェットの状態を管理します。
 class MainNavigationScreen extends StatefulWidget {
-  MainNavigationScreen({Key? key}) : super(key: key); // keyパラメータを追加
+  MainNavigationScreen({Key? key}) : super(key: key);
 
   @override
   _MainNavigationScreenState createState() => _MainNavigationScreenState();
@@ -46,13 +46,22 @@ class MainNavigationScreen extends StatefulWidget {
 //このクラスはアプリケーションのメインナビゲーションを管理し、
 //ナビゲーションバーを使って異なるページ（HomePage、ContentsPage、ManabaPage、SettingsPage）に切り替えることができます。
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
+  //初期ページのインデックスを定義します。この変数がこのページの要です。
+  //_をつけるのは、プライベート変数であることを示すためです。
   int _currentIndex = 0;
+
+  //0: HomePage
+  //1: ContentsPage
+  //2: ManabaPage
+  //3: SettingsPage
 
   @override
   Widget build(BuildContext context) {
     Widget _body;
 
-    // インデックスによってbodyを変更します。
+    // インデックスによって_bodyを切り替えられるようにswitch文にします
+    // if文でもいいですが、switch文の方が見やすいです。
+    //_bodyとするのは、_bodyが変数で、bodyがScaffoldのプロパティだからです。
     switch (_currentIndex) {
       case 0:
         _body = HomePage();
@@ -66,14 +75,18 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       case 3:
         _body = SettingsPage();
         break;
+      //エラーハンドリング
       default:
         _body = Center(child: Text('ページが見つかりません'));
         break;
     }
 
     // Scaffoldで画面を構成します。
+    //3つの構造から成り立っています。
     return Scaffold(
       backgroundColor: Colors.white,
+
+      //上部のバーの設定
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(0.0), // AppBarの高さを設定
         child: AppBar(
@@ -82,8 +95,13 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           elevation: 0, // AppBarの影をなくす
         ),
       ),
+
+      //bodyプロパティに_bodyを設定
       body: _body,
+
+      //下部のバーの設定
       bottomNavigationBar: Padding(
+        //デザイン部分
         padding: EdgeInsets.only(bottom: 16), // ナビゲーションバーの下に16の余白を追加
         child: CurvedNavigationBar(
           index: _currentIndex,
@@ -98,8 +116,12 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           backgroundColor: Colors.white,
           buttonBackgroundColor: Colors.white, // タブボタンの背景色
           animationDuration: Duration(milliseconds: 300),
+
+          //処理部分
+          //アイコンをタップしたときの処理
           onTap: (index) {
             setState(() {
+              //タップしたインデックスを_currentIndexに代入することで、_bodyを切り替える
               _currentIndex = index;
             });
           },
