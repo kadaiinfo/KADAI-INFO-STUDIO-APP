@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+//ここではmanabaをクッキーを使ってログインするために、flutter_inappwebviewをインポートしています。
+//flutter_inappwebviewはflutter_webview_pluginとは違い、WebViewをカスタマイズすることができます。
+//ゆくゆくはflutter_webviewをflutter_inappwebviewに置き換えていく予定です。
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class ManabaPage extends StatefulWidget {
@@ -40,11 +43,12 @@ class _ManabaPageState extends State<ManabaPage> {
         onWebViewCreated: (InAppWebViewController controller) {
           _controller = controller;
         },
-        // ... その他のWebView設定
       ),
     );
   }
 }
+
+//以下Cookieを取得、設定するための関数
 
 // クッキーを取得
 Future<List<Cookie>> getCookies(String url) async {
@@ -60,6 +64,5 @@ void setCookie(String url, String name, String value) async {
     url: Uri.parse(url),
     name: name,
     value: value,
-    // 他に必要なパラメータがあれば設定
   );
 }

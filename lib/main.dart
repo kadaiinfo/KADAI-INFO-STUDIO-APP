@@ -1,35 +1,51 @@
+//パッケージはpubspec.yamlに記述することでインポートできるようになります。
 import 'package:flutter/material.dart';
+//これはボトムナビゲーションバーをカスタマイズするためのパッケージです。
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 
-import 'setting_page.dart';
-import 'contents_page.dart';
-import 'home_page.dart';
-import 'manaba_page.dart';
+//以下ようにしてファイルをインポートできます。
+//mainが長くなったら別ファイルに切り分けて開発していくのがいいです。
+import 'home_page.dart'; //トップぺージのファイルをインポート
+import 'manaba_page.dart'; //manabaページのファイルをインポート
+import 'contents_page.dart'; //コンテンツページのファイルをインポート
+import 'setting_page.dart'; //設定ページのファイルをインポート
 
+//ここはFlutterのおまじないです。
+//main関数はアプリのエントリーポイントです。
+//ここからアプリが始まります。
 void main() {
   runApp(MyApp());
 }
 
+//ここもFlutterのおまじないです。
+//MyAppクラスはアプリのルートとなるクラスです。
+//StatelessWidgetを継承したクラスで、
+//MaterialAppウィジェットを返すbuildメソッドを持っています。
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(brightness: Brightness.light),
-      home: WebViewWithErrorHandling(),
+      home: MainNavigationScreen(),
     );
   }
 }
 
-class WebViewWithErrorHandling extends StatefulWidget {
+//ここもFlutterのおまじないです。
+//StatefulWidgetを継承したMainNavigationScreenクラスを作成します。
+//_MainNavigationScreenState() は _MainNavigationScreenState クラスの新しいインスタンスを作成します。
+//このクラスは MainNavigationScreen ウィジェットの状態を管理します。
+class MainNavigationScreen extends StatefulWidget {
+  MainNavigationScreen({Key? key}) : super(key: key); // keyパラメータを追加
+
   @override
-  _WebViewWithErrorHandlingState createState() =>
-      _WebViewWithErrorHandlingState();
+  _MainNavigationScreenState createState() => _MainNavigationScreenState();
 }
 
-class _WebViewWithErrorHandlingState extends State<WebViewWithErrorHandling> {
+//このクラスはアプリケーションのメインナビゲーションを管理し、
+//ナビゲーションバーを使って異なるページ（HomePage、ContentsPage、ManabaPage、SettingsPage）に切り替えることができます。
+class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _currentIndex = 0;
 
   @override
@@ -68,7 +84,7 @@ class _WebViewWithErrorHandlingState extends State<WebViewWithErrorHandling> {
       ),
       body: _body,
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(bottom: 16), // ナビゲーションバーの下に10の余白を追加
+        padding: EdgeInsets.only(bottom: 16), // ナビゲーションバーの下に16の余白を追加
         child: CurvedNavigationBar(
           index: _currentIndex,
           height: 60,
@@ -90,30 +106,5 @@ class _WebViewWithErrorHandlingState extends State<WebViewWithErrorHandling> {
         ),
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    setupFirebaseMessaging();
-  }
-
-  void setupFirebaseMessaging() async {
-    await Firebase.initializeApp();
-
-    FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      // アプリがフォアグラウンドにあるときにプッシュ通知を受信した場合の処理
-      print('Message received: ${message.notification?.body}');
-    });
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      // ユーザーがプッシュ通知をタップしてアプリを開いた場合の処理
-      print('Message clicked!');
-    });
   }
 }

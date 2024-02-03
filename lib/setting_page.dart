@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -76,18 +75,4 @@ class SettingsPage extends StatelessWidget {
       ),
     );
   }
-
-  // 今後、FCMの通知権限をリクエストする関数
-  // void requestNotificationPermissions() async {
-  //   final messaging = FirebaseMessaging.instance;
-  //   await messaging.requestPermission(
-  //     alert: true,
-  //     announcement: false,
-  //     badge: true,
-  //     carPlay: false,
-  //     criticalAlert: false,
-  //     provisional: false,
-  //     sound: true,
-  //   );
-  // }
 }
