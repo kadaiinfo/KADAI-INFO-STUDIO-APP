@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 //これはボトムナビゲーションバーをカスタマイズするためのパッケージです。
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 //これはFirebaseのメッセージングを使うためのパッケージです。
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 //以下ようにしてファイルをインポートできます。
 //mainが長くなったら別ファイルに切り分けて開発していくのがいいです。
