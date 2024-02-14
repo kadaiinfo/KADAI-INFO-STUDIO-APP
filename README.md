@@ -1,9 +1,3 @@
-#使い方
-git clone 
-flutter run
-
-
-
 # webview
 
 A new Flutter project.
