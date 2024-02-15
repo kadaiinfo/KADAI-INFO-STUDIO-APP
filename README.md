@@ -29,5 +29,12 @@ $ flutter run -d "<デバイスID>"
 # 開発の進め方
 1. まずはIssuesからIssueを立てる引き受けます。右側のAssigneesのassign yourselfを押してください。
 2. Assigneesの下の方にあるDevelopmentからbranchを作って作業してください。
-3. 
+3. 作業が一区切りついたら、コミットします。
+    ```
+    git add .
+    git commit -m "<コミットメッセージ>"
+    git push origin <ブランチ名>
+    ```
+4. 全ての作業が終わったら、リポジトリの上部のCompere & pull requestを押します。
+
 
