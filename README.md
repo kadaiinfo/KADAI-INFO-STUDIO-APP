@@ -27,7 +27,7 @@
 ```
 
 # 開発の進め方
-1. まずはIssuesからIssueを立てる引き受けます。右側のAssigneesのassign yourselfを押してください。
+1. まずはIssuesからIssueを立てるor引き受けます。右側のAssigneesのassign yourselfを押してください。
 2. Assigneesの下の方にあるDevelopmentからbranchを作って作業してください。
 3. 作業が一区切りついたら、コミットします。
     ```
