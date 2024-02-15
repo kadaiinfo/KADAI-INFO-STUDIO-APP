@@ -5,26 +5,40 @@
 プロジェクトに必要な依存関係をインストールします。
 
 ```
-$ git clone https://github.com/kadaiinfo/KADAI-INFO-STUDIO-APP.git
-$ cd KADAI-INFO-STUDIO-APP
-$ flutter pub get
+% git clone https://github.com/kadaiinfo/KADAI-INFO-STUDIO-APP.git
+% cd KADAI-INFO-STUDIO-APP
+% flutter pub get
 ```
 依存関係のインストールが完了したら、開発を始める準備が整いました。
 
 シミュレータが起動した状態で以下のコマンドで実行することで、プロジェクトをシミュレータ上で起動できます。
 ```
-$ flutter run
+% flutter run
 ```
 
 以下のコマンドで、接続可能なデバイスを一覧表示することができます。
 ```
-$ flutter deveices
+% flutter deveices
 ```
 
-上記のコマンドで取得した実機(iPhoneやAndroid)のデバイスIDを指定して実行することで、実機上で起動できます。
+上記のコマンドで取得したデバイスIDを指定して実行することで、実機上で起動することもできます。
 ```
-$ flutter run -d "<デバイスID>"
+% flutter run -d "<デバイスID>"
 ```
 
 # 開発の進め方
+1. まずはIssuesからIssueを立てる引き受けます。右側のAssigneesのassign yourselfを押してください。
+2. Assigneesの下の方にあるDevelopmentからbranchを作って作業してください。
+3. 作業が一区切りついたら、コミットします。
+    ```
+    % git add .
+    % git commit -m "<コミットメッセージ>"
+    % git push origin <ブランチ名>
+    ```
+4. 全ての作業が終わったら、リポジトリの上部に黄色で表示されているCompere & pull requestを押します。プルリクを送ってください。
+5. 誰かがコードを確認しておかしなところがなければMerge Pull requestを押して、マージします。
+
+
+
+
 
