@@ -21,10 +21,13 @@ $ flutter run
 $ flutter deveices
 ```
 
-上記のコマンドで取得した実機(iPhoneやAndroid)のデバイスIDを指定して実行することで、実機上で起動できます。
+上記のコマンドで取得したデバイスIDを指定して実行することで、実機上で起動することもできます。
 ```
 $ flutter run -d "<デバイスID>"
 ```
 
 # 開発の進め方
+1. まずはIssuesからIssueを立てる引き受けます。右側のAssigneesのassign yourselfを押してください。
+2. Assigneesの下の方にあるDevelopmentからbranchを作って作業してください。
+3. 
 
