@@ -1,11 +1,13 @@
+import 'dart:convert';
+import 'dart:io';
+
 //パッケージはpubspec.yamlに記述することでインポートできるようになります。
 import 'package:flutter/material.dart';
 //これはボトムナビゲーションバーをカスタマイズするためのパッケージです。
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 //これはFirebaseのメッセージングを使うためのパッケージです。
 
-import 'dart:convert';
-import 'dart:io';
+//firebaseのパッケージです。
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -18,6 +20,7 @@ import 'contents_page.dart'; //コンテンツページのファイルをイン�
 import 'setting_page.dart'; //設定ページのファイルをインポート
 import 'firebase_options.dart'; //Firebaseの設定ファイルをインポート
 
+//push通知のトークンを取得するために書き換えたので、もっと綺麗に書けるかもしれません。
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -33,6 +36,7 @@ void main() async {
   runApp(MyApp());
 }
 
+//ここら辺は通知関連のメソッド
 Future<void> _initializePlatformSpecifics(
     FlutterLocalNotificationsPlugin notificationsPlugin,
     FirebaseMessaging messagingInstance) async {
@@ -92,7 +96,9 @@ void _setupForegroundNotificationHandling(
   );
 }
 
-//ここもFlutterのおまじないです。
+//ここからがアプリのメイン部分です。
+
+////ここもFlutterのおまじないです。
 //MyAppクラスはアプリのルートとなるクラスです。
 //StatelessWidgetを継承したクラスで、
 //MaterialAppウィジェットを返すbuildメソッドを持っています。
