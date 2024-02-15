@@ -37,6 +37,12 @@
     ```
 4. 全ての作業が終わったら、リポジトリの上部に黄色で表示されているCompere & pull requestを押します。プルリクを送ってください。
 5. 誰かがコードを確認しておかしなところがなければMerge Pull requestを押して、マージします。
+6. mainに戻ってpullします。
+    ```
+    git checkout main 
+    git pull https://github.com/kadaiinfo/KADAI-INFO-STUDIO-APP.git
+    ```
+7. これでブランチで作業したものがmainに統合されました！
 
 
 
