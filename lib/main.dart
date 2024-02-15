@@ -4,18 +4,92 @@ import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 //これはFirebaseのメッセージングを使うためのパッケージです。
 
+import 'dart:convert';
+import 'dart:io';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 //以下ようにしてファイルをインポートできます。
 //mainが長くなったら別ファイルに切り分けて開発していくのがいいです。
 import 'home_page.dart'; //トップぺージのファイルをインポート
 import 'manaba_page.dart'; //manabaページのファイルをインポート
 import 'contents_page.dart'; //コンテンツページのファイルをインポート
 import 'setting_page.dart'; //設定ページのファイルをインポート
+import 'firebase_options.dart'; //Firebaseの設定ファイルをインポート
 
-//ここはFlutterのおまじないです。
-//main関数はアプリのエントリーポイントです。
-//ここからアプリが始まります。
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  final messagingInstance = FirebaseMessaging.instance;
+  final fcmToken = await messagingInstance.getToken();
+  debugPrint('FCM TOKEN: $fcmToken');
+
+  final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  await _initializePlatformSpecifics(
+      flutterLocalNotificationsPlugin, messagingInstance);
+  _setupForegroundNotificationHandling(flutterLocalNotificationsPlugin);
+
   runApp(MyApp());
+}
+
+Future<void> _initializePlatformSpecifics(
+    FlutterLocalNotificationsPlugin notificationsPlugin,
+    FirebaseMessaging messagingInstance) async {
+  if (Platform.isIOS) {
+    await messagingInstance.requestPermission();
+    await messagingInstance.setForegroundNotificationPresentationOptions(
+        alert: true, badge: true, sound: true);
+  } else {
+    const androidChannel = AndroidNotificationChannel(
+      'default_notification_channel',
+      'プッシュ通知のチャンネル名',
+      importance: Importance.max,
+    );
+    await notificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(androidChannel);
+  }
+}
+
+void _setupForegroundNotificationHandling(
+    FlutterLocalNotificationsPlugin notificationsPlugin) {
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+    final notification = message.notification;
+    final android = message.notification?.android;
+
+    if (Platform.isAndroid) {
+      await notificationsPlugin.show(
+        0,
+        notification!.title,
+        notification.body,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            'default_notification_channel',
+            'プッシュ通知のチャンネル名',
+            importance: Importance.max,
+            icon: android?.smallIcon,
+          ),
+        ),
+        payload: json.encode(message.data),
+      );
+    }
+  });
+
+  notificationsPlugin.initialize(
+    const InitializationSettings(
+      android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+      iOS: DarwinInitializationSettings(),
+    ),
+    onDidReceiveNotificationResponse: (NotificationResponse details) {
+      final payload = details.payload;
+      if (payload != null) {
+        final payloadMap = json.decode(payload) as Map<String, dynamic>;
+        debugPrint(payloadMap.toString());
+      }
+    },
+  );
 }
 
 //ここもFlutterのおまじないです。
