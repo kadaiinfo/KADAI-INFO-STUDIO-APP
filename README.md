@@ -5,8 +5,24 @@
 プロジェクトに必要な依存関係をインストールします。
 
 ```
-git clone https://github.com/kadaiinfo/KADAI-INFO-STUDIO-APP.git
-cd KADAI-INFO-STUDIO-APP
-flutter pub get
+$ git clone https://github.com/kadaiinfo/KADAI-INFO-STUDIO-APP.git
+$ cd KADAI-INFO-STUDIO-APP
+$ flutter pub get
 ```
 依存関係のインストールが完了したら、開発を始める準備が整いました。
+
+シミュレータが起動した状態で以下のコマンドで実行することで、プロジェクトをシミュレータ上で起動できます。
+```
+$ flutter run
+```
+
+以下のコマンドで、接続可能なデバイスを一覧表示することができます。
+```
+$ flutter deveices
+```
+
+実機のデバイスIDを指定して実行することで、実機上で起動できます。
+```
+$ flutter run -d "<デバイスID>"
+```
+
