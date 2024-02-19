@@ -25,8 +25,7 @@ https://zenn.dev/heyhey1028/books/flutter-basics/viewer/getting_started_mac
 ```
 依存関係のインストールが完了したら、開発を始める準備が整いました。
 
-###　起動方法
-
+###　起動方法<br>
 シミュレータが起動した状態で以下のコマンドで実行することで、プロジェクトをシミュレータ上で起動できます。
 ```
 % flutter run
