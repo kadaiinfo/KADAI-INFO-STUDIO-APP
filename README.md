@@ -1,14 +1,16 @@
 # 環境構築
 
 ## gitのインストール<br>
-gitをインストールしていない場合はインストールします。<br>
+gitをインストールしていない場合はインストールします。以下の手順に従ってインストルールを行ってください。<br>
 https://kinsta.com/jp/knowledgebase/install-git/
 
 ## flutterの環境構築方法<br>
 ### Windowsの場合<br>
+windowsをお使いの人は以下の記事を参考に環境構築を行なってください。<br>
 https://zenn.dev/heyhey1028/books/flutter-basics/viewer/getting_started_windows
 
 ### Macの場合<br>
+macをお使いの人は以下の記事を参考に環境構築を行なってください。<br>
 https://zenn.dev/heyhey1028/books/flutter-basics/viewer/getting_started_mac
 
 
@@ -42,6 +44,7 @@ https://zenn.dev/heyhey1028/books/flutter-basics/viewer/getting_started_mac
 ```
 
 # 開発の進め方
+### ローカル開発する
 1. まずはIssuesからIssueを立てるor引き受けます。右側のAssigneesのassign yourselfを押してください。
 2. Assigneesの下の方にあるDevelopmentからbranchを作って作業してください。
 3. 作業が一区切りついたら、コミットします。
@@ -58,6 +61,9 @@ https://zenn.dev/heyhey1028/books/flutter-basics/viewer/getting_started_mac
     % git pull 
     ```
 7. これでブランチで作業したものがmainに統合されます。
+
+### デプロイ作業
+iOSの場合、AppleStoreConnectからデプロイします。Reviewを出して、審査が通ればリリースになります。デプロイした後にバグが見つかることが多いので、デプロイする際はいつでも元のバージョンに戻せるようにバックアップをとっておきましょう。<br>
 
 # バージョンの指定
 バージョンは、pubspec.yamlファイルに指定します。<br>
