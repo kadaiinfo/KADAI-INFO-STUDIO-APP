@@ -62,6 +62,21 @@ https://zenn.dev/heyhey1028/books/flutter-basics/viewer/getting_started_mac
     ```
 7. これでブランチで作業したものがmainに統合されます。
 
+### ディレクトリ構造
+基本的にlibの中にコードを書いていきます。<br>
+```
+lib
+├── contents_page.dart //コンテンツページ
+├── firebase_options.dart //firebaseの設定ページ
+├── home_page.dart //トップページ
+├── main.dart //main アプリの起動などを担うroot
+├── manaba_page.dart // manabaページ
+└── setting_page.dart //設定ページ
+```
+
+pubspec.yamlファイルにimportしたいパッケージを書き足していくことで、ファイルでパッケージをインポートすることができます。<br>
+
+
 ### デプロイ作業
 iOSの場合、AppleStoreConnectからデプロイします。Reviewを出して、審査が通ればリリースになります。デプロイした後にバグが見つかることが多いので、デプロイする際はいつでも元のバージョンに戻せるようにバックアップをとっておきましょう。<br>
 
@@ -82,6 +97,9 @@ iOSの場合、AppleStoreConnectからデプロイします。Reviewを出して
 
 ビルド番号はバージョンに限らず、ビルドするたび(ストアにリリースするたび)に一つずつ上げていきます。<br>
 ```1→2→3```<br>
+
+リリース番号とビルド番号を上げずにデプロイすることはできない？ので注意。<br>
+
 
 
 
