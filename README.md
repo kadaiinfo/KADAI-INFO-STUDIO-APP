@@ -1,11 +1,13 @@
 # 環境構築
+
+## gitのインストール<br>
 gitをインストールしていない場合はインストールします。<br>
 https://kinsta.com/jp/knowledgebase/install-git/
 
-flutterの環境構築方法<br>
-Windowsの場合<br>
+## flutterの環境構築方法<br>
+<br>Windowsの場合<br>
 https://zenn.dev/heyhey1028/books/flutter-basics/viewer/getting_started_windows
-Macの場合<br>
+<br>Macの場合<br>
 https://zenn.dev/heyhey1028/books/flutter-basics/viewer/getting_started_mac
 
 このプロジェクトを使って開発を始めるには、まずプロジェクトを自分のコンピュータにクローンする必要があります。Gitを使用している場合は、以下のコマンドをターミナルで実行してください。
