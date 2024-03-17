@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 //これはボトムナビゲーションバーをカスタマイズするためのパッケージです。
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 //これはFirebaseのメッセージングを使うためのパッケージです。
+import 'package:firebase_core/firebase_core.dart';
 
 //以下ようにしてファイルをインポートできます。
 //mainが長くなったら別ファイルに切り分けて開発していくのがいいです。
@@ -14,7 +15,9 @@ import 'setting_page.dart'; //設定ページのファイルをインポート
 //ここはFlutterのおまじないです。
 //main関数はアプリのエントリーポイントです。
 //ここからアプリが始まります。
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
